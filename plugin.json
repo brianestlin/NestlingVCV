@@ -1,0 +1,25 @@
+{
+  "slug": "NestlingAudio",
+  "name": "Nestling Audio",
+  "version": "2.0.0",
+  "license": "GPL-3.0-only",
+  "brand": "Nestling Audio",
+  "author": "Brian Estlin",
+  "authorEmail": "brian.estlin@gmail.com",
+  "authorUrl": "https://brianestlin.com",
+  "pluginUrl": "https://github.com/brianestlin/NestlingVCV",
+  "manualUrl": "https://github.com/brianestlin/NestlingVCV/README.md",
+  "sourceUrl": "https://github.com/brianestlin/NestlingVCV",
+  "donateUrl": "https://www.paypal.com/donate/?hosted_button_id=MJYE5QYRB5QLW",
+  "changelogUrl": "",
+  "modules": [
+    {
+      "slug": "NestlingAudio-uJazz",
+      "name": "\u00b5Jazz",
+      "description": "Harmonize a melody with jazz voicings",
+      "tags": [
+        "Quantizer"
+      ]
+    }
+  ]
+}
