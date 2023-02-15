@@ -58,6 +58,9 @@ struct NestlingAudio_uJazz : NestlingAudio {
     outputs[OUT1_OUTPUT].setVoltage(midiToCV(melNote + offsets[0]));
     outputs[OUT2_OUTPUT].setVoltage(midiToCV(melNote + offsets[1]));
     outputs[OUT3_OUTPUT].setVoltage(midiToCV(melNote + offsets[2]));
+    getOutputInfo(OUT1_OUTPUT)->description = midiToString(melNote + offsets[0]);
+    getOutputInfo(OUT2_OUTPUT)->description = midiToString(melNote + offsets[1]);
+    getOutputInfo(OUT3_OUTPUT)->description = midiToString(melNote + offsets[2]);
 	}
 };
 
