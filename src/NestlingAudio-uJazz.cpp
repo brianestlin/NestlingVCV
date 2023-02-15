@@ -42,11 +42,14 @@ struct NestlingAudio_uJazz : NestlingAudio {
     // INPUT
     float rootVoltage = inputs[ROOT_INPUT].getVoltage();
     int rootBase = cvToMidi(rootVoltage) % 12;
+    getInputInfo(ROOT_INPUT)->description = midiToString(rootBase);
 
   	size_t chordTypeIndex = cvToIndex(inputs[CHORD_INPUT].getVoltage(), chordNames.size());
+    getInputInfo(CHORD_INPUT)->description = chordNames[chordTypeIndex];
 
     float melVoltage = inputs[MEL_INPUT].getVoltage();
     int melNote = cvToMidi(melVoltage);
+    getInputInfo(MEL_INPUT)->description = midiToString(melNote);
 
 		// ALGORITHM
     int offsets[3];

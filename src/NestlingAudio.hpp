@@ -49,6 +49,7 @@ struct NestlingAudio : Module {
   // utility
   int cvToMidi(const float voltage);
   float midiToCV(const int midi);
+  std::string midiToString(const int midi);
   size_t cvToIndex(const float voltage, const size_t length);
 };
 

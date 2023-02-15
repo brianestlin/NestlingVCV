@@ -137,6 +137,11 @@ float NestlingAudio::midiToCV(const int midi) {
   return (midi - 60) / 12.0f;
 }
 
+std::string NestlingAudio::midiToString(const int midi) {
+  std::string notes[] = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
+  return notes[midi % 12];
+}
+
 size_t NestlingAudio::cvToIndex(const float voltage, const size_t length) {
   size_t index = 0;
   // TODO: consider making this a switch in the UI instead of a hardcoded constant
