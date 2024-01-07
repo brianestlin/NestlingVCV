@@ -8,6 +8,7 @@ Plugin* pluginInstance;
 void init(Plugin* p) {
 	pluginInstance = p;
 	p->addModel(modelNestlingAudio_uJazz);
+  p->addModel(modelNestlingAudio_Jazz);
 
 	// Add modules here
 	// p->addModel(modelMyModule);

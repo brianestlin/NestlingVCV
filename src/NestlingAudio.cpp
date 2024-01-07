@@ -68,6 +68,27 @@ std::string CloseVoicer::displayName() {
   return "Close";
 }
 
+void DropTwoVoicer::adjustOffsets(int* offsets) {
+  int voiceTwo = offsets[0];
+  offsets[0] = offsets[1];
+  offsets[1] = offsets[2];
+  offsets[2] = voiceTwo - 12;
+}
+std::string DropTwoVoicer::displayName() {
+  return "Drop 2";
+}
+
+void DropTwoFourVoicer::adjustOffsets(int* offsets) {
+  int voiceTwo = offsets[0];
+  int voiceFour = offsets[2];
+  offsets[0] = offsets[1];
+  offsets[1] = voiceTwo - 12;
+  offsets[2] = voiceFour - 12;
+}
+std::string DropTwoFourVoicer::displayName() {
+  return "Drop 2+4";
+}
+
 
 NestlingAudio::NestlingAudio() {
 }

@@ -33,6 +33,16 @@ struct CloseVoicer : Voicer {
   virtual std::string displayName() override;
 };
 
+struct DropTwoVoicer : Voicer {
+  void adjustOffsets(int* offsets) override;
+  virtual std::string displayName() override;
+};
+
+struct DropTwoFourVoicer : Voicer {
+  void adjustOffsets(int* offsets) override;
+  virtual std::string displayName() override;
+};
+
 
 struct NestlingAudio : Module {
 
