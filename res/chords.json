@@ -1,12 +1,12 @@
 [
   {"name": "dim7", "intervals": [3, 6, 9]},
-  {"name": "min7b5", "intervals": [3, 6, 10]},
-  {"name": "min7", "intervals": [3, 7, 10]},
-  {"name": "minmaj7", "intervals": [3, 7, 11]},
-  {"name": "dom7", "intervals": [4, 7, 10]},
+  {"name": "-7b5", "intervals": [3, 6, 10]},
+  {"name": "-7", "intervals": [3, 7, 10]},
+  {"name": "-(maj7)", "intervals": [3, 7, 11]},
+  {"name": "7", "intervals": [4, 7, 10]},
   {"name": "maj7", "intervals": [4, 7, 11]},
   {"name": "alt", "intervals": [4, 8, 10]},
-  {"name": "maj7s5", "intervals": [4, 8, 11]},
+  {"name": "maj7#5", "intervals": [4, 8, 11]},
   {"name": "sus7", "intervals": [5, 7, 10]},
-  {"name": "susmaj7", "intervals": [5, 7, 11]}
+  {"name": "sus(maj7)", "intervals": [5, 7, 11]}
 ]

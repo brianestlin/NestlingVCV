@@ -291,6 +291,44 @@ struct NestlingAudio_Jazz : NestlingAudio {
 	}
 };
 
+struct JazzDisplay : LedDisplay {
+	NestlingAudio_Jazz* module;
+
+	void drawLayer(const DrawArgs& args, int layer) override {
+		if (layer == 1) {
+			std::string fontPath = "res/fonts/DIN-Alternate-Bold.ttf";
+			std::shared_ptr<Font> font = APP->window->loadFont(asset::plugin(pluginInstance, fontPath));
+
+			if (!font) {
+        INFO("No font!\n");
+				return;
+      }
+
+			nvgSave(args.vg);
+			nvgFontFaceId(args.vg, font->handle);
+			nvgFontSize(args.vg, 13);
+			nvgTextLetterSpacing(args.vg, 0.0);
+			nvgTextAlign(args.vg, NVG_ALIGN_LEFT | NVG_ALIGN_TOP);
+			nvgFillColor(args.vg, nvgRGB(255, 255, 99));
+      if (module != NULL &&
+          module->getParamQuantity(NestlingAudio_Jazz::ROOT_PARAM) != NULL &&
+          module->getParamQuantity(NestlingAudio_Jazz::CHORD_PARAM) != NULL) {
+        std::string text = string::f("%s%s", 
+            module->getParamQuantity(NestlingAudio_Jazz::ROOT_PARAM)->getDisplayValueString().c_str(),
+            module->getParamQuantity(NestlingAudio_Jazz::CHORD_PARAM)->getDisplayValueString().c_str());
+        INFO("about to get bounds\n");
+        float bounds[4];
+        nvgTextBounds(args.vg, 0, 0, text.c_str(), NULL, bounds);
+        INFO("Bounds: %f, %f, %f, %f\n", bounds[0], bounds[1], bounds[2], bounds[3]);
+        float x = this->box.size.x;
+        float y = this->box.size.y;
+        nvgText(args.vg, (x - (bounds[2] - bounds[0]))/2, (y - (bounds[3] - bounds[1]))/2, text.c_str(), NULL);
+      }
+			nvgRestore(args.vg);
+		}
+		LedDisplay::drawLayer(args, layer);
+	}
+};
 
 struct NestlingAudio_JazzWidget : ModuleWidget {
 	NestlingAudio_JazzWidget(NestlingAudio_Jazz* module) {
@@ -302,16 +340,22 @@ struct NestlingAudio_JazzWidget : ModuleWidget {
 		addChild(createWidget<ScrewSilver>(Vec(RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 		addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 
+    JazzDisplay* display = createWidget<JazzDisplay>(mm2px(Vec(38.0, 22.5)));
+		display->box.size = mm2px(Vec(20.0, 8.0));
+		display->module = module;
+		addChild(display);
+
+    /*
 		addParam(createParamCentered<RoundBlackSnapKnob>(mm2px(Vec(30.48, 19.373)), module, NestlingAudio_Jazz::ROOT_PARAM));
-		addParam(createParamCentered<RoundBlackSnapKnob>(mm2px(Vec(10.556, 39.184)), module, NestlingAudio_Jazz::CHORD_PARAM));
-		addParam(createParamCentered<RoundBlackSnapKnob>(mm2px(Vec(49.833, 39.184)), module, NestlingAudio_Jazz::HARMONY_PARAM));
-		addParam(createParamCentered<CKSSThreeHorizontal>(mm2px(Vec(30.48, 58.995)), module, NestlingAudio_Jazz::VOICING_PARAM));
+		addParam(createParamCentered<RoundBlackSnapKnob>(mm2px(Vec(30.48, 40.771)), module, NestlingAudio_Jazz::CHORD_PARAM));
+		addParam(createParamCentered<RoundBlackSnapKnob>(mm2px(Vec(49.833, 40.771)), module, NestlingAudio_Jazz::HARMONY_PARAM));
+		addParam(createParamCentered<CKSSThreeHorizontal>(mm2px(Vec(49.833, 83.966)), module, NestlingAudio_Jazz::VOICING_PARAM));
 
 		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(10.506, 19.373)), module, NestlingAudio_Jazz::ROOT_INPUT));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(10.506, 40.771)), module, NestlingAudio_Jazz::CHORD_INPUT));
 		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(49.833, 19.373)), module, NestlingAudio_Jazz::HARMONY_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(30.48, 39.184)), module, NestlingAudio_Jazz::CHORD_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(49.79, 58.995)), module, NestlingAudio_Jazz::VOICING_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(10.506, 73.156)), module, NestlingAudio_Jazz::MEL_INPUT));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(49.833, 62.143)), module, NestlingAudio_Jazz::VOICING_INPUT));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(10.506, 73.068)), module, NestlingAudio_Jazz::MEL_INPUT));
 		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(10.506, 83.966)), module, NestlingAudio_Jazz::GATE_INPUT));
 
 		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(13.491, 102.632)), module, NestlingAudio_Jazz::OUT1_OUTPUT));
@@ -320,6 +364,26 @@ struct NestlingAudio_JazzWidget : ModuleWidget {
 		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(13.491, 112.692)), module, NestlingAudio_Jazz::ROOT_OUTPUT));
 		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(30.48, 112.692)), module, NestlingAudio_Jazz::TRIG_OUTPUT));
 		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(47.326, 112.692)), module, NestlingAudio_Jazz::MEL_8VA_OUTPUT));
+    */
+		addParam(createParamCentered<RoundBlackSnapKnob>(mm2px(Vec(30.48, 19.373)), module, NestlingAudio_Jazz::ROOT_PARAM));
+		addParam(createParamCentered<RoundBlackSnapKnob>(mm2px(Vec(30.48, 32.292)), module, NestlingAudio_Jazz::CHORD_PARAM));
+		addParam(createParamCentered<RoundBlackSnapKnob>(mm2px(Vec(30.48, 45.21)), module, NestlingAudio_Jazz::HARMONY_PARAM));
+		addParam(createParamCentered<CKSSThreeHorizontal>(mm2px(Vec(30.48, 58.129)), module, NestlingAudio_Jazz::VOICING_PARAM));
+
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(9.448, 19.373)), module, NestlingAudio_Jazz::ROOT_INPUT));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(9.448, 32.292)), module, NestlingAudio_Jazz::CHORD_INPUT));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(9.448, 45.21)), module, NestlingAudio_Jazz::HARMONY_INPUT));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(9.448, 58.129)), module, NestlingAudio_Jazz::VOICING_INPUT));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(9.448, 71.048)), module, NestlingAudio_Jazz::MEL_INPUT));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(9.448, 83.966)), module, NestlingAudio_Jazz::GATE_INPUT));
+
+		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(13.491, 102.632)), module, NestlingAudio_Jazz::OUT1_OUTPUT));
+		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(30.48, 102.632)), module, NestlingAudio_Jazz::OUT2_OUTPUT));
+		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(47.326, 102.632)), module, NestlingAudio_Jazz::OUT3_OUTPUT));
+		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(13.491, 112.692)), module, NestlingAudio_Jazz::ROOT_OUTPUT));
+		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(30.48, 112.692)), module, NestlingAudio_Jazz::TRIG_OUTPUT));
+		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(47.326, 112.692)), module, NestlingAudio_Jazz::MEL_8VA_OUTPUT));
+
 	}
 };
 
