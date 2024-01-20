@@ -158,7 +158,7 @@ struct NestlingAudio_Jazz : NestlingAudio {
     ((LabelQuantity*)getParamQuantity(ROOT_PARAM))->setLabels(noteNames);
 
 		loadChords();
-		configParam<LabelQuantity>(CHORD_PARAM, 0.f, (float) (chordNames.size() - 1), 1.f, "chord type");
+		configParam<LabelQuantity>(CHORD_PARAM, 0.f, (float) (chordNames.size() - 1), 2.f, "chord type");
     ((LabelQuantity*)getParamQuantity(CHORD_PARAM))->setLabels(chordNames);
 
 		std::vector<std::string> harmonizerNames;
@@ -175,7 +175,7 @@ struct NestlingAudio_Jazz : NestlingAudio {
     harm->init(chordIntervals);
     harmonizers.push_back(harm);
     harmonizerNames.push_back(harm->displayName());
-		configParam<LabelQuantity>(HARMONY_PARAM, 0.f, (float) (harmonizers.size() - 1), 1.f, "harmonizer type");
+		configParam<LabelQuantity>(HARMONY_PARAM, 0.f, (float) (harmonizers.size() - 1), 0.f, "harmonizer type");
     ((LabelQuantity*)getParamQuantity(HARMONY_PARAM))->setLabels(harmonizerNames);
 
 		std::vector<std::string> voicerNames;
